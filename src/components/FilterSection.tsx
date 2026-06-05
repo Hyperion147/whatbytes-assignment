@@ -8,8 +8,8 @@ interface FilterSectionProps {
 
 const FilterSection = ({ className }: FilterSectionProps) => {
     return (
-        <div className="mx-8">
-            <div className="rounded-md bg-primary text-white flex flex-col gap-4 p-4">
+        <div className={className}>
+            <div className="sticky mx-8 flex flex-col gap-4 rounded-md bg-primary p-4 text-white">
                 <div className="text-xl">Filter</div>
                 <div>Category</div>
                 <RadioGroup defaultValue="option-one">
