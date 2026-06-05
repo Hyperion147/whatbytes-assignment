@@ -107,26 +107,18 @@ export default async function ProductPage({
         .slice(0, 3);
 
     return (
-        <div className="min-h-screen bg-blue-50 px-6 py-8 text-slate-900 md:px-12">
+        <div className="min-h-screen bg-blue-50 px-6 pb-8 pt-24 text-slate-900 md:px-12">
             <div className="mx-auto max-w-7xl">
-                <div className="flex justify-between">
-                    <Button
-                        asChild
-                        variant="ghost"
-                        className="mb-6 gap-2 text-blue-950"
-                    >
-                        <Link href="/">
-                            <ArrowLeft className="size-4" />
-                            Back to products
-                        </Link>
-                    </Button>
-                    <Button asChild variant="default" className="gap-2 px-4">
-                        <div>
-                            <ShoppingCart className="size-4" />
-                            Cart
-                        </div>
-                    </Button>
-                </div>
+                <Button
+                    asChild
+                    variant="ghost"
+                    className="mb-6 gap-2 text-blue-950"
+                >
+                    <Link href="/">
+                        <ArrowLeft className="size-4" />
+                        Back to products
+                    </Link>
+                </Button>
 
                 <div className="">
                     <div className="rounded-3xl bg-white p-4 shadow-sm ring-1 ring-slate-200 md:p-6">
@@ -189,15 +181,10 @@ export default async function ProductPage({
                                     </div>
                                 </aside>
 
-                                <div className="flex flex-wrap gap-3 flex-col">
-                                    <Button className="gap-2 py-6">
-                                        <ShoppingCart className="size-4" />
-                                        Add to Cart
-                                    </Button>
-                                    <Button variant="outline" className="py-6">
-                                        Buy Now
-                                    </Button>
-                                </div>
+                                <Button className="gap-2 py-6">
+                                    <ShoppingCart className="size-4" />
+                                    Add to Cart
+                                </Button>
                             </div>
                         </div>
                     </div>
