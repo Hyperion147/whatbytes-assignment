@@ -1,5 +1,6 @@
 import { Search, ShoppingCart } from "lucide-react";
 import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 
 const Navbar = () => {
     return (
@@ -12,10 +13,12 @@ const Navbar = () => {
                     placeholder="Search for products..."
                 />
             </div>
-            <div className="px-4 py-2 text-sm rounded-md bg-blue-950 text-white flex gap-2">
-                <ShoppingCart className="size-4" />
-                <span>Cart</span>
-            </div>
+            <Button asChild variant="outline" className="gap-2 px-4">
+                <div>
+                    <ShoppingCart className="size-4" />
+                    Cart
+                </div>
+            </Button>
         </div>
     );
 };
