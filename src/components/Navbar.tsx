@@ -6,9 +6,11 @@ import { Button } from "./ui/button";
 
 type NavbarProps = {
     onCartClick?: () => void;
+    searchTerm: string;
+    onSearchChange: (value: string) => void;
 };
 
-const Navbar = ({ onCartClick }: NavbarProps) => {
+const Navbar = ({ onCartClick, searchTerm, onSearchChange }: NavbarProps) => {
     return (
         <div className="fixed top-0 z-50 flex w-full items-center justify-between bg-primary px-20 py-4">
             <div className="font-bold text-white">LOGO</div>
@@ -17,6 +19,8 @@ const Navbar = ({ onCartClick }: NavbarProps) => {
                 <Input
                     className="border-none pl-8 text-white placeholder:text-white"
                     placeholder="Search for products..."
+                    value={searchTerm}
+                    onChange={(e) => onSearchChange(e.target.value)}
                 />
             </div>
             <Button

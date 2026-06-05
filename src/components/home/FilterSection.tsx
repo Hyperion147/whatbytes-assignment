@@ -27,7 +27,7 @@ const FilterSection = ({
 }: FilterSectionProps) => {
     return (
         <div className={className}>
-            <div className="sticky mx-8 flex flex-col gap-4 rounded-md bg-primary p-4 text-white">
+            <div className="sticky top-24 mx-8 flex max-h-[calc(100vh-8rem)] flex-col gap-4 overflow-y-auto rounded-md bg-primary p-4 text-white">
                 <div className="text-xl">Filter</div>
                 <div>Category</div>
                 <RadioGroup

@@ -10,7 +10,11 @@ import { useMemo, useState } from "react";
 import FilterSection from "./FilterSection";
 import ProductSection from "./ProductSection";
 
-const Catalog = () => {
+type CatalogProps = {
+    searchTerm: string;
+};
+
+const Catalog = ({ searchTerm }: CatalogProps) => {
     const categories = [
         "All",
         ...new Set(allProducts.map((product) => product.category)),
@@ -27,6 +31,8 @@ const Catalog = () => {
     ]);
 
     const filteredProducts = useMemo(() => {
+        const normalizedSearch = searchTerm.trim().toLowerCase();
+
         return products.filter((product) => {
             const matchesCategory =
                 selectedCategory === "All" ||
@@ -36,20 +42,28 @@ const Catalog = () => {
                 parsePrice(product.price) >= priceRange[0] &&
                 parsePrice(product.price) <= priceRange[1];
 
-            return matchesCategory && matchesPrice;
+            const matchesSearch =
+                normalizedSearch === "" ||
+                product.title.toLowerCase().includes(normalizedSearch);
+
+            return matchesCategory && matchesPrice && matchesSearch;
         });
-    }, [selectedCategory, priceRange]);
+    }, [selectedCategory, priceRange, searchTerm]);
 
     const showFeaturedProduct =
         selectedCategory === "All" ||
         (featuredProduct.category === selectedCategory &&
             parsePrice(featuredProduct.price) >= priceRange[0] &&
-            parsePrice(featuredProduct.price) <= priceRange[1]);
+            parsePrice(featuredProduct.price) <= priceRange[1] &&
+            (searchTerm.trim() === "" ||
+                featuredProduct.title
+                    .toLowerCase()
+                    .includes(searchTerm.trim().toLowerCase())));
 
     return (
-        <div className="grid h-full min-h-0 w-full grid-cols-4 gap-6 bg-blue-50 px-12 pb-54 pt-24">
+        <div className="grid h-full min-h-0 w-full grid-cols-4 gap-6 overflow-hidden bg-blue-50 px-12 pb-54 pt-24">
             <FilterSection
-                className="col-span-1"
+                className="col-span-1 h-full"
                 categories={categories}
                 selectedCategory={selectedCategory}
                 onCategoryChange={setSelectedCategory}
@@ -60,7 +74,7 @@ const Catalog = () => {
             />
 
             <ProductSection
-                className="col-span-3"
+                className="col-span-3 h-full"
                 products={filteredProducts}
                 showFeaturedProduct={showFeaturedProduct}
             />

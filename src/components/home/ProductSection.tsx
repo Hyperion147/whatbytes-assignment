@@ -40,7 +40,7 @@ const ProductSection = ({
             <div className="text-2xl font-bold text-blue-950">
                 Product Listing
             </div>
-            <div className="mt-4 grid grid-cols-3 min-h-0 w-fit gap-4 overflow-y-auto rounded-md">
+            <div className="mt-4 grid min-h-0 flex-1 grid-cols-3 gap-4 overflow-y-auto pr-2 rounded-md">
                 {products.length === 0 ? (
                     <div className="col-span-3 rounded-md bg-white p-6 text-sm text-slate-500">
                         No products match your filters.

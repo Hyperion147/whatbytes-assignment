@@ -1,10 +1,8 @@
 import Footer from "@/components/Footer"
-import Catalog from "@/components/home/Catalog"
 
 const page = () => {
   return (
-    <div className="relative h-screen overflow-hidden">
-          <Catalog />
+    <div className="relative overflow-hidden">
       <Footer />
     </div>
   )

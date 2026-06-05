@@ -17,7 +17,7 @@ const icons = [
 
 const Footer = () => {
     return (
-        <div className="fixed  bottom-0 flex justify-between w-full pl-20 py-12 pr-40 bg-blue-950 text-white">
+        <div className="fixed bottom-0 flex justify-between w-full pl-20 py-12 pr-40 bg-blue-950 text-white">
             <div className="gap-4 flex flex-col">
                 <div className="font-bold text-xl">Filters</div>
                 <div>All Electronics</div>
