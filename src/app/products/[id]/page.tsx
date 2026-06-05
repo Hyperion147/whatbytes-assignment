@@ -3,8 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Check, ShoppingCart, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ProductGallery } from "@/components/ProductGallery";
-import { QuantitySelector } from "@/components/QuantitySelector";
+import { ProductGallery } from "@/components/products/ProductGallery";
+import { QuantitySelector } from "@/components/products/QuantitySelector";
 import { cn } from "@/lib/utils";
 import { featuredProduct, getProductById, products } from "@/lib/products";
 

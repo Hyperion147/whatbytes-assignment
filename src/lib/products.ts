@@ -15,7 +15,7 @@ export const products: Product[] = [
     title: "Shoes",
     price: "$129.99",
     logo: "/products/shoe.png",
-    category: "Footwear",
+    category: "Clothing",
     description:
       "Comfort-first everyday sneakers with a lightweight build and clean blue-accent styling.",
     rating: 4.5,
@@ -26,7 +26,7 @@ export const products: Product[] = [
     title: "Headphones",
     price: "$89.99",
     logo: "/products/headphones.png",
-    category: "Audio",
+    category: "Electronics",
     description:
       "Wireless over-ear headphones tuned for crisp sound, soft cushions, and long listening sessions.",
     rating: 4.5,
@@ -37,7 +37,7 @@ export const products: Product[] = [
     title: "Bagpack",
     price: "$199.99",
     logo: "/products/bag.png",
-    category: "Travel",
+    category: "Home",
     description:
       "A spacious everyday backpack with a structured silhouette and plenty of room for tech gear.",
     rating: 4.5,
@@ -48,7 +48,7 @@ export const products: Product[] = [
     title: "Smart Watch",
     price: "$59.99",
     logo: "/products/watch.png",
-    category: "Wearables",
+    category: "Home",
     description:
       "A compact smartwatch with fitness tracking, notifications, and a polished modern finish.",
     rating: 4.5,
@@ -59,7 +59,7 @@ export const products: Product[] = [
     title: "Sunglasses",
     price: "$49.99",
     logo: "/products/sunglasses.png",
-    category: "Accessories",
+    category: "Home",
     description:
       "A sharp, lightweight frame built for daily wear with a clean premium look.",
     rating: 4.5,
@@ -70,7 +70,7 @@ export const products: Product[] = [
     title: "Camera",
     price: "$299.99",
     logo: "/products/camera.png",
-    category: "Photography",
+    category: "Electronics",
     description:
       "A compact camera setup for everyday content, product shots, and travel photography.",
     rating: 4.5,
@@ -81,7 +81,7 @@ export const products: Product[] = [
     title: "Shirt",
     price: "$79.99",
     logo: "/products/shirt.png",
-    category: "Apparel",
+    category: "Clothing",
     description:
       "A clean, comfortable shirt with a simple fit that matches the rest of the storefront palette.",
     rating: 4.5,
@@ -100,6 +100,15 @@ export const featuredProduct = {
   rating: 4.5,
   reviews: 312,
 };
+
+export function parsePrice(price: string): number {
+  const match = price.match(/[\d,]+(?:\.\d+)?/);
+  if (!match) return 0;
+
+  return Number(match[0].replace(/,/g, ""));
+}
+
+export const allProducts = [...products, featuredProduct]
 
 export function getProductById(id: number) {
   return products.find((product) => product.id === id);
