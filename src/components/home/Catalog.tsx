@@ -1,34 +1,53 @@
 "use client";
 
+import { useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import FilterSection from "./FilterSection";
+import ProductSection from "./ProductSection";
+
 import {
     allProducts,
     featuredProduct,
     products,
     parsePrice,
 } from "@/lib/products";
-import { useMemo, useState } from "react";
-import FilterSection from "./FilterSection";
-import ProductSection from "./ProductSection";
 
 type CatalogProps = {
     searchTerm: string;
 };
 
-const Catalog = ({ searchTerm }: CatalogProps) => {
+const Catalog = ({searchTerm}: CatalogProps ) => {
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const router = useRouter();
+
     const categories = [
         "All",
         ...new Set(allProducts.map((product) => product.category)),
     ];
-    const minPrice = 0;
-    const maxPrice = Math.ceil(
+    const minPriceDefault = 0;
+    const maxPriceDefault = Math.ceil(
         Math.max(...allProducts.map((product) => parsePrice(product.price))),
     );
+    
+    const selectedCategory = searchParams.get("category") ?? "All";
 
-    const [selectedCategory, setSelectedCategory] = useState("All");
-    const [priceRange, setPriceRange] = useState<[number, number]>([
-        minPrice,
-        maxPrice,
-    ]);
+    const minPrice = Number(searchParams.get("min") ?? minPriceDefault);
+    const maxPrice = Number(searchParams.get("max") ?? maxPriceDefault);
+
+    const updateParams = (updates: Record<string, string | number | null>) => {
+        const params = new URLSearchParams(searchParams.toString());
+
+        for (const [key, value] of Object.entries(updates)) {
+            if (value === null || value === "") {
+                params.delete(key);
+            } else {
+                params.set(key, String(value));
+            }
+        }
+
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    };
 
     const filteredProducts = useMemo(() => {
         const normalizedSearch = searchTerm.trim().toLowerCase();
@@ -38,23 +57,22 @@ const Catalog = ({ searchTerm }: CatalogProps) => {
                 selectedCategory === "All" ||
                 product.category === selectedCategory;
 
+            const productPrice = parsePrice(product.price);
             const matchesPrice =
-                parsePrice(product.price) >= priceRange[0] &&
-                parsePrice(product.price) <= priceRange[1];
-
+                productPrice >= minPrice && productPrice <= maxPrice;
             const matchesSearch =
                 normalizedSearch === "" ||
                 product.title.toLowerCase().includes(normalizedSearch);
 
             return matchesCategory && matchesPrice && matchesSearch;
         });
-    }, [selectedCategory, priceRange, searchTerm]);
+    }, [selectedCategory, minPrice, maxPrice, searchTerm]);
 
     const showFeaturedProduct =
         selectedCategory === "All" ||
         (featuredProduct.category === selectedCategory &&
-            parsePrice(featuredProduct.price) >= priceRange[0] &&
-            parsePrice(featuredProduct.price) <= priceRange[1] &&
+            parsePrice(featuredProduct.price) >= minPrice &&
+            parsePrice(featuredProduct.price) <= maxPrice &&
             (searchTerm.trim() === "" ||
                 featuredProduct.title
                     .toLowerCase()
@@ -66,11 +84,15 @@ const Catalog = ({ searchTerm }: CatalogProps) => {
                 className="col-span-1 h-full"
                 categories={categories}
                 selectedCategory={selectedCategory}
-                onCategoryChange={setSelectedCategory}
-                priceRange={priceRange}
-                onPriceRangeChange={setPriceRange}
-                minPrice={minPrice}
-                maxPrice={maxPrice}
+                onCategoryChange={(value) =>
+                    updateParams({ category: value === "All" ? null : value })
+                }
+                priceRange={[minPrice, maxPrice]}
+                onPriceRangeChange={([min, max]) => {
+                    updateParams({ min, max });
+                }}
+                minPrice={minPriceDefault}
+                maxPrice={maxPriceDefault}
             />
 
             <ProductSection

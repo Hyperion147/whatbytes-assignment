@@ -1,11 +1,28 @@
-import Footer from "@/components/Footer"
+"use client";
+
+import { useState } from "react";
+import type { ReactNode } from "react";
+import Navbar from "@/components/Navbar";
+import { CartDrawer } from "@/components/CartDrawer";
+import Catalog from "@/components/home/Catalog";
+import Footer from "@/components/Footer";
 
 const page = () => {
-  return (
-    <div className="relative overflow-hidden">
-      <Footer />
-    </div>
-  )
-}
+    const [open, setOpen] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
 
-export default page
+    return (
+        <div className="relative overflow-hidden">
+            <Navbar
+                onCartClick={() => setOpen(true)}
+                searchTerm={searchTerm}
+                onSearchChange={setSearchTerm}
+            />
+            <Catalog searchTerm={searchTerm} />
+            <Footer />
+            <CartDrawer open={open} onClose={() => setOpen(false)} />
+        </div>
+    );
+};
+
+export default page;
