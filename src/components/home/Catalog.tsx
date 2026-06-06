@@ -87,9 +87,9 @@ const Catalog = ({ searchTerm }: CatalogProps) => {
                     .includes(searchTerm.trim().toLowerCase())));
 
     return (
-        <div className="grid h-full min-h-0 w-full grid-cols-1 gap-4 overflow-hidden bg-blue-50 px-4 pb-36 pt-20 sm:px-6 lg:grid-cols-4 lg:gap-6 lg:px-12 lg:pb-54 lg:pt-24">
+        <div className="grid h-full min-h-0 w-full grid-cols-1 gap-4 overflow-hidden bg-blue-50 px-4 pb-36 pt-20 sm:px-6 lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-6 lg:px-12 lg:pb-54 lg:pt-24">
             <FilterSection
-                className="lg:col-span-1 lg:h-full mt-12 md:mt-0"
+                className="mt-12 md:mt-0 lg:mt-0 lg:self-start"
                 categories={categories}
                 selectedCategory={selectedCategory}
                 onCategoryChange={(value) =>
@@ -105,7 +105,7 @@ const Catalog = ({ searchTerm }: CatalogProps) => {
             />
 
             <ProductSection
-                className="lg:col-span-3 lg:h-full"
+                className="min-w-0 lg:min-h-0"
                 products={filteredProducts}
                 showFeaturedProduct={showFeaturedProduct}
             />

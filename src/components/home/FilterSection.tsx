@@ -92,8 +92,8 @@ const FilterSection = (props: FilterSectionProps) => {
 
     return (
         <div className={props.className}>
-            <div className="hidden h-full lg:block">
-                <div className="sticky top-24 mx-8 flex max-h-[calc(100vh-8rem)] flex-col gap-4 overflow-y-auto rounded-md bg-primary p-4 text-white">
+            <div className="hidden lg:block">
+                <div className="sticky top-24 flex max-h-[calc(100vh-8rem)] w-full flex-col gap-4 overflow-y-auto rounded-md bg-primary p-4 text-white">
                     <FilterControls {...props} />
                 </div>
             </div>
