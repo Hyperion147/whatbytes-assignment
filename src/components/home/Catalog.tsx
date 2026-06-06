@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import FilterSection from "./FilterSection";
 import ProductSection from "./ProductSection";
@@ -16,7 +16,7 @@ type CatalogProps = {
     searchTerm: string;
 };
 
-const Catalog = ({searchTerm}: CatalogProps ) => {
+const Catalog = ({ searchTerm }: CatalogProps) => {
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const router = useRouter();
@@ -29,11 +29,19 @@ const Catalog = ({searchTerm}: CatalogProps ) => {
     const maxPriceDefault = Math.ceil(
         Math.max(...allProducts.map((product) => parsePrice(product.price))),
     );
-    
+
     const selectedCategory = searchParams.get("category") ?? "All";
 
     const minPrice = Number(searchParams.get("min") ?? minPriceDefault);
     const maxPrice = Number(searchParams.get("max") ?? maxPriceDefault);
+
+    const [debouncePriceRange, setDebouncePriceRange] = useState<
+        [number, number]
+    >([minPrice, maxPrice]);
+
+    useEffect(() => {
+        setDebouncePriceRange([minPrice, maxPrice]);
+    }, [minPrice, maxPrice]);
 
     const updateParams = (updates: Record<string, string | number | null>) => {
         const params = new URLSearchParams(searchParams.toString());
@@ -87,9 +95,10 @@ const Catalog = ({searchTerm}: CatalogProps ) => {
                 onCategoryChange={(value) =>
                     updateParams({ category: value === "All" ? null : value })
                 }
-                priceRange={[minPrice, maxPrice]}
-                onPriceRangeChange={([min, max]) => {
-                    updateParams({ min, max });
+                priceRange={debouncePriceRange}
+                onPriceRangeChange={setDebouncePriceRange}
+                onPriceCommit={(range) => {
+                    updateParams({min: range[0], max: range[1]});
                 }}
                 minPrice={minPriceDefault}
                 maxPrice={maxPriceDefault}

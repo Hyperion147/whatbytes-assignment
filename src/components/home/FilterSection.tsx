@@ -9,6 +9,7 @@ interface FilterSectionProps {
     onCategoryChange: (value: string) => void;
     priceRange: [number, number];
     onPriceRangeChange: (value: [number, number]) => void;
+    onPriceCommit: (value: [number, number]) => void;
     minPrice: number;
     maxPrice: number;
 }
@@ -22,6 +23,7 @@ const FilterSection = ({
     onCategoryChange,
     priceRange,
     onPriceRangeChange,
+    onPriceCommit,
     minPrice,
     maxPrice,
 }: FilterSectionProps) => {
@@ -47,6 +49,9 @@ const FilterSection = ({
                         value={priceRange}
                         onValueChange={(value) =>
                             onPriceRangeChange(value as [number, number])
+                        }
+                        onValueCommit={(value) =>
+                            onPriceCommit(value as [number, number])
                         }
                         min={minPrice}
                         max={maxPrice}
