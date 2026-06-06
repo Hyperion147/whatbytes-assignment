@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import { CartDrawer } from "@/components/CartDrawer";
 import Catalog from "@/components/home/Catalog";
@@ -17,7 +17,11 @@ const page = () => {
                 searchTerm={searchTerm}
                 onSearchChange={setSearchTerm}
             />
-            <Catalog searchTerm={searchTerm} />
+            <Suspense fallback={
+                <>Loading Components...</>
+            }>
+                <Catalog searchTerm={searchTerm} />
+            </Suspense>
             <Footer />
             <CartDrawer open={open} onClose={() => setOpen(false)} />
         </div>
