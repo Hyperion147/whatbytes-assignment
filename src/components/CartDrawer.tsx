@@ -1,12 +1,8 @@
 "use client";
 
-import { X, ShoppingCart } from "lucide-react";
+import { X, ShoppingCart, Minus, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-const cartItems = [
-    { id: 1, title: "Smartphone", price: "$199", quantity: 1 },
-    { id: 2, title: "Headphones", price: "$89.99", quantity: 2 },
-];
+import { useStore } from "@/store/useStore";
 
 type CartDrawerProps = {
     open: boolean;
@@ -14,10 +10,19 @@ type CartDrawerProps = {
 };
 
 export function CartDrawer({ open, onClose }: CartDrawerProps) {
+    const cartItems = useStore((state) => state.cartItems);
+    const incrementQuantity = useStore((state) => state.incrementQuantity);
+    const decrementQuantity = useStore((state) => state.decrementQuantity);
+    const removeFromCart = useStore((state) => state.removeFromCart);
+
+    const subTotal = cartItems.reduce((sum, item) => {
+        const price = Number(item.price.replace(/[^0-9.]/g, ""));
+        return sum + price * item.quantity;
+    }, 0);
 
     return (
         <>
-            <button
+            <Button
                 type="button"
                 aria-hidden={!open}
                 tabIndex={open ? 0 : -1}
@@ -59,31 +64,73 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
 
                 <div className="h-[calc(100vh-73px)] overflow-y-auto p-5">
                     <div className="space-y-4">
-                        {cartItems.map((item) => (
-                            <div
-                                key={item.id}
-                                className="rounded-2xl border border-slate-200 bg-blue-50 p-4"
-                            >
-                                <div className="flex items-start justify-between gap-4">
-                                    <div>
-                                        <p className="font-semibold text-blue-950">
-                                            {item.title}
-                                        </p>
-                                        <p className="text-sm text-slate-500">
-                                            Qty: {item.quantity}
+                        {cartItems.length === 0 ? (
+                            <div className="rounded-2xl border border-slate-200 bg-blue-50 p-4 text-sm text-slate-500">
+                                Your cart is empty.
+                            </div>
+                        ) : (
+                            cartItems.map((item) => (
+                                <div
+                                    key={item.id}
+                                    className="rounded-2xl border border-slate-200 bg-blue-50 p-4"
+                                >
+                                    <div className="flex items-start justify-between gap-4">
+                                        <div>
+                                            <p className="font-semibold text-blue-950">
+                                                {item.title}
+                                            </p>
+                                            <p className="text-sm text-slate-500">
+                                                Qty: {item.quantity}
+                                            </p>
+                                        </div>
+                                        <p className="text-sm font-bold text-slate-900">
+                                            {item.price}
                                         </p>
                                     </div>
-                                    <p className="text-sm font-bold text-slate-900">
-                                        {item.price}
-                                    </p>
+                                    <div className="flex mt-2 items-center justify-between">
+                                        <div className="flex items-center gap-2">
+                                            <Button
+                                                type="button"
+                                                size="sm"
+                                                variant="outline"
+                                                onClick={() =>
+                                                    decrementQuantity(item.id)
+                                                }
+                                            >
+                                                <Minus className="size-4" />
+                                            </Button>
+                                            <Button
+                                                type="button"
+                                                size="sm"
+                                                variant="outline"
+                                                onClick={() =>
+                                                    incrementQuantity(item.id)
+                                                }
+                                            >
+                                                <Plus className="size-4" />
+                                            </Button>
+                                        </div>
+                                        <Button
+                                            type="button"
+                                            size="sm"
+                                            variant="destructive"
+                                            onClick={() =>
+                                                removeFromCart(item.id)
+                                            }
+                                        >
+                                            <Trash2 className="size-4" />
+                                        </Button>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))
+                        )}
                     </div>
 
                     <div className="mt-6 rounded-2xl bg-blue-950 p-4 text-white">
                         <p className="text-sm text-blue-100">Subtotal</p>
-                        <p className="mt-1 text-2xl font-bold">$378.98</p>
+                        <p className="mt-1 text-2xl font-bold">
+                            ${subTotal.toFixed()}
+                        </p>
                         <Button className="mt-4 w-full bg-white text-blue-950 hover:bg-blue-50">
                             Checkout
                         </Button>

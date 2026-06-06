@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import type { ReactNode } from "react";
 import Navbar from "@/components/Navbar";
 import { CartDrawer } from "@/components/CartDrawer";
 import Catalog from "@/components/home/Catalog";

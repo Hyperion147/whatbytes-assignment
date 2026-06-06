@@ -4,7 +4,7 @@ import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { featuredProduct, type Product } from "@/lib/products";
-
+import { useStore } from "@/store/useStore";
 interface ProductSectionProps {
     className?: string;
     products?: Product[];
@@ -35,6 +35,8 @@ const ProductSection = ({
     products = [],
     showFeaturedProduct = true,
 }: ProductSectionProps) => {
+    const addToCart = useStore((state) => state.addToCart);
+
     return (
         <div className={cn(className, "flex min-h-0 flex-col")}>
             <div className="text-2xl font-bold text-blue-950">
@@ -62,11 +64,19 @@ const ProductSection = ({
                             <p className="px-2 text-sm font-bold">
                                 {product.price}
                             </p>
-                            <Button className="w-full" asChild>
-                                <Link href={`/products/${product.id}`}>
-                                    View Product
-                                </Link>
-                            </Button>
+                            <div className="flex w-full gap-2">
+                                <Button asChild>
+                                    <Link href={`/products/${product.id}`}>
+                                        View Product
+                                    </Link>
+                                </Button>
+                                <Button
+                                    variant="outline"
+                                    onClick={() => addToCart(product)}
+                                >
+                                    Add to Cart
+                                </Button>
+                            </div>
                         </div>
                     ))
                 )}
