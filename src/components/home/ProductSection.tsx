@@ -39,12 +39,12 @@ const ProductSection = ({
 
     return (
         <div className={cn(className, "flex min-h-0 flex-col")}>
-            <div className="text-2xl font-bold text-blue-950">
+            <div className="px-1 text-xl font-bold text-blue-950 sm:text-2xl">
                 Product Listing
             </div>
-            <div className="mt-4 grid min-h-0 flex-1 grid-cols-3 gap-4 overflow-y-auto pr-2 rounded-md">
+            <div className="mt-4 grid min-h-0 flex-1 grid-cols-1 gap-4 overflow-y-auto rounded-md pr-1 sm:grid-cols-2 lg:grid-cols-3 lg:pr-2">
                 {products.length === 0 ? (
-                    <div className="col-span-3 rounded-md bg-white p-6 text-sm text-slate-500">
+                    <div className="col-span-full rounded-md bg-white p-6 text-sm text-slate-500">
                         No products match your filters.
                     </div>
                 ) : (
@@ -58,19 +58,20 @@ const ProductSection = ({
                                 alt={product.title}
                                 width={160}
                                 height={160}
-                                className="rounded-md size-40"
+                                className="h-36 w-full rounded-md object-contain sm:h-40"
                             />
-                            <p className="px-2">{product.title}</p>
+                            <p className="px-2 pt-2">{product.title}</p>
                             <p className="px-2 text-sm font-bold">
                                 {product.price}
                             </p>
-                            <div className="flex w-full gap-2">
-                                <Button asChild>
+                            <div className="flex w-full flex-col gap-2 pt-2 sm:flex-row">
+                                <Button className="w-full md:w-fit" asChild>
                                     <Link href={`/products/${product.id}`}>
                                         View Product
                                     </Link>
                                 </Button>
                                 <Button
+                                    className="w-full md:w-fit"
                                     variant="outline"
                                     onClick={() => addToCart(product)}
                                 >
@@ -81,16 +82,16 @@ const ProductSection = ({
                     ))
                 )}
                 {showFeaturedProduct ? (
-                    <div className="col-span-2 flex items-start rounded-md bg-white transition hover:shadow-md">
+                    <div className="col-span-full flex flex-col items-start overflow-hidden rounded-md bg-white transition hover:shadow-md lg:col-span-2 lg:flex-row">
                         <Image
                             src={featuredProduct.logo}
                             alt={featuredProduct.title}
                             width={320}
                             height={320}
-                            className="size-80 rounded-md"
+                            className="h-52 w-full rounded-md object-contain sm:h-64 lg:h-80 lg:w-80"
                         />
-                        <div className="flex flex-col flex-wrap space-y-2">
-                            <p className="py-2 text-xl font-bold text-blue-950">
+                        <div className="flex flex-col space-y-2 p-4">
+                            <p className="pt-1 text-xl font-bold text-blue-950">
                                 {featuredProduct.title}
                             </p>
                             <RatingStars />
@@ -106,7 +107,7 @@ const ProductSection = ({
                             <p className="text-sm font-semibold text-blue-950">
                                 {featuredProduct.category}
                             </p>
-                            <Button asChild>
+                            <Button className="w-full sm:w-auto" asChild>
                                 <Link href={`/products/${featuredProduct.id}`}>
                                     View Product
                                 </Link>

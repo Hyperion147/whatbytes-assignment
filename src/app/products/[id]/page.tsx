@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Check, ShoppingCart, Star } from "lucide-react";
+import { ArrowLeft, Check, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProductGallery } from "@/components/products/ProductGallery";
-import { QuantitySelector } from "@/components/products/QuantitySelector";
+import { ProductActions } from "@/components/products/ProductActions";
 import { cn } from "@/lib/utils";
 import { featuredProduct, getProductById, products } from "@/lib/products";
 
@@ -107,12 +107,12 @@ export default async function ProductPage({
         .slice(0, 3);
 
     return (
-        <div className="min-h-screen bg-blue-50 px-6 pb-8 pt-24 text-slate-900 md:px-12">
+        <div className="min-h-screen bg-blue-50 px-4 pb-8 pt-20 text-slate-900 sm:px-6 md:px-12 md:pt-24">
             <div className="mx-auto max-w-7xl">
                 <Button
                     asChild
                     variant="ghost"
-                    className="mb-6 gap-2 text-blue-950"
+                    className="mb-4 gap-2 text-blue-950 md:mb-6"
                 >
                     <Link href="/">
                         <ArrowLeft className="size-4" />
@@ -121,22 +121,22 @@ export default async function ProductPage({
                 </Button>
 
                 <div className="">
-                    <div className="rounded-3xl bg-white p-4 shadow-sm ring-1 ring-slate-200 md:p-6">
+                    <div className="rounded-3xl bg-white p-3 shadow-sm ring-1 ring-slate-200 sm:p-4 md:p-6">
                         <div className="grid gap-6 md:grid-cols-[1fr_1.05fr]">
                             <ProductGallery
                                 image={product.logo}
                                 title={product.title}
                             />
 
-                            <div className="flex flex-col justify-between gap-5">
+                            <div className="flex flex-col justify-between gap-4 md:gap-5">
                                 <div className="space-y-3">
                                     <p className="text-sm font-semibold uppercase tracking-[0.25em] text-blue-600">
                                         {product.category}
                                     </p>
-                                    <h1 className="text-3xl font-bold text-blue-950 md:text-4xl">
+                                    <h1 className="text-2xl font-bold text-blue-950 sm:text-3xl md:text-4xl">
                                         {product.title}
                                     </h1>
-                                    <div className="flex flex-wrap items-center gap-3">
+                                    <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                                         <RatingStars />
                                         <span className="text-sm font-medium text-slate-500">
                                             {product.rating} rating
@@ -145,7 +145,6 @@ export default async function ProductPage({
                                             {product.reviews} reviews
                                         </span>
                                     </div>
-                                    <QuantitySelector />
                                     <p className="max-w-xl text-sm leading-6 text-slate-600 md:text-base">
                                         {product.description}
                                     </p>
@@ -155,12 +154,12 @@ export default async function ProductPage({
                                     <p className="text-sm font-medium text-slate-500">
                                         Price
                                     </p>
-                                    <p className="text-3xl font-bold text-blue-950">
+                                    <p className="text-2xl font-bold text-blue-950 sm:text-3xl">
                                         {product.price}
                                     </p>
                                 </div>
 
-                                <aside className="rounded-3xl bg-blue-950 p-6 text-white shadow-sm">
+                                <aside className="rounded-3xl bg-blue-950 p-5 text-white shadow-sm sm:p-6">
                                     <h2 className="text-xl font-bold">
                                         Product Highlights
                                     </h2>
@@ -181,17 +180,14 @@ export default async function ProductPage({
                                     </div>
                                 </aside>
 
-                                <Button className="gap-2 py-6">
-                                    <ShoppingCart className="size-4" />
-                                    Add to Cart
-                                </Button>
+                                <ProductActions product={product} />
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <section className="mt-8">
-                    <div className="mb-4 flex items-center justify-between">
+                    <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                         <h2 className="text-2xl font-bold text-blue-950">
                             Customer Reviews
                         </h2>
@@ -199,7 +195,7 @@ export default async function ProductPage({
                             4 reviews
                         </span>
                     </div>
-                    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
                         {reviews.map((review) => (
                             <div
                                 key={review.id}
@@ -225,17 +221,17 @@ export default async function ProductPage({
                 </section>
 
                 <section className="mt-8">
-                    <div className="mb-4 flex items-center justify-between">
+                    <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                         <h2 className="text-2xl font-bold text-blue-950">
                             Related Products
                         </h2>
-                        <Button variant="outline">
+                        <Button variant="outline" className="w-full sm:w-auto">
                             <Link href="/" className="text-sm">
                                 View all
                             </Link>
                         </Button>
                     </div>
-                    <div className="grid gap-4 md:grid-cols-3">
+                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                         {relatedProducts.map((item) => (
                             <Link
                                 key={item.id}
@@ -249,7 +245,7 @@ export default async function ProductPage({
                                     alt={item.title}
                                     width={640}
                                     height={480}
-                                    className="h-48 w-full rounded-xl object-cover"
+                                    className="h-40 w-full rounded-xl object-contain sm:h-48"
                                 />
                                 <div className="mt-3">
                                     <p className="text-lg font-semibold text-blue-950">
@@ -270,4 +266,3 @@ export default async function ProductPage({
         </div>
     );
 }
-

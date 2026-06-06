@@ -1,14 +1,22 @@
 "use client";
 
-import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export function QuantitySelector() {
-    const [quantity, setQuantity] = useState(1);
+type QuantitySelectorProps = {
+    quantity: number;
+    onQuantityChange: (quantity: number) => void;
+};
+
+export function QuantitySelector({
+    quantity,
+    onQuantityChange,
+}: QuantitySelectorProps) {
+    const decrement = () => onQuantityChange(Math.max(1, quantity - 1));
+    const increment = () => onQuantityChange(quantity + 1);
 
     return (
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
             <span className="text-sm font-medium text-slate-500">Qty</span>
             <div className="flex items-center rounded-md border border-slate-200 bg-white shadow-sm">
                 <Button
@@ -16,7 +24,7 @@ export function QuantitySelector() {
                     variant="ghost"
                     size="icon-sm"
                     className="rounded-none rounded-l-md"
-                    onClick={() => setQuantity((current) => Math.max(1, current - 1))}
+                    onClick={decrement}
                     disabled={quantity <= 1}
                     aria-label="Decrease quantity"
                 >
@@ -32,7 +40,7 @@ export function QuantitySelector() {
                     variant="ghost"
                     size="icon-sm"
                     className="rounded-none rounded-r-md"
-                    onClick={() => setQuantity((current) => current + 1)}
+                    onClick={increment}
                     aria-label="Increase quantity"
                 >
                     <Plus className="size-4" />

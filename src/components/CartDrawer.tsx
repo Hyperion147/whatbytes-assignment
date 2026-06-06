@@ -37,7 +37,7 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
                     open ? "translate-x-0" : "translate-x-full"
                 }`}
             >
-                <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
+                <div className="flex items-center justify-between border-b border-slate-200 px-5 py-2.5">
                     <div className="flex items-center gap-3">
                         <div className="rounded-full bg-blue-50 p-2 text-blue-950">
                             <ShoppingCart className="size-4" />

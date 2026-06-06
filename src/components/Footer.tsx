@@ -17,33 +17,36 @@ const icons = [
 
 const Footer = () => {
     return (
-        <div className="fixed bottom-0 flex justify-between w-full pl-20 py-12 pr-40 bg-blue-950 text-white">
-            <div className="gap-4 flex flex-col">
-                <div className="font-bold text-xl">Filters</div>
-                <div>All Electronics</div>
-                <div>&copy; 2026 American</div>
-            </div>
-            <div className="gap-4 flex flex-col">
-                <div className="text-xl font-bold">About Us</div>
-                <div className="">About Us</div>
-                <div className="">Contact</div>
-            </div>
-            
-            {/* using react-icons here because lucide removed company logo support */}
-            <div className="gap-4 flex flex-col">
-                <div className="font-bold text-xl">Follow Us</div>
-                <div className="flex gap-2">
-                    {icons.map((i) => (
-                        <div
-                            key={i.a}
-                            className="rounded-full p-2 bg-blue-800"
-                        >
-                            {i.icon}
-                        </div>
-                    ))}
+        <footer className="w-full bg-blue-950 text-white md:fixed md:bottom-0">
+            <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-3 md:px-10 md:py-12 lg:px-20">
+                <div className="flex flex-col gap-4">
+                    <div className="text-xl font-bold">Filters</div>
+                    <div>All Electronics</div>
+                    <div>&copy; 2026 American</div>
+                </div>
+
+                <div className="flex flex-col gap-4">
+                    <div className="text-xl font-bold">About Us</div>
+                    <div>About Us</div>
+                    <div>Contact</div>
+                </div>
+
+                {/* using react-icons here because lucide removed company logo support */}
+                <div className="flex flex-col gap-4">
+                    <div className="text-xl font-bold">Follow Us</div>
+                    <div className="flex gap-2">
+                        {icons.map((i) => (
+                            <div
+                                key={i.a}
+                                className="rounded-full bg-blue-800 p-2"
+                            >
+                                {i.icon}
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
-        </div>
+        </footer>
     );
 };
 

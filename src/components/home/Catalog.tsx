@@ -87,9 +87,9 @@ const Catalog = ({ searchTerm }: CatalogProps) => {
                     .includes(searchTerm.trim().toLowerCase())));
 
     return (
-        <div className="grid h-full min-h-0 w-full grid-cols-4 gap-6 overflow-hidden bg-blue-50 px-12 pb-54 pt-24">
+        <div className="grid h-full min-h-0 w-full grid-cols-1 gap-4 overflow-hidden bg-blue-50 px-4 pb-36 pt-20 sm:px-6 lg:grid-cols-4 lg:gap-6 lg:px-12 lg:pb-54 lg:pt-24">
             <FilterSection
-                className="col-span-1 h-full"
+                className="lg:col-span-1 lg:h-full mt-12 md:mt-0"
                 categories={categories}
                 selectedCategory={selectedCategory}
                 onCategoryChange={(value) =>
@@ -98,14 +98,14 @@ const Catalog = ({ searchTerm }: CatalogProps) => {
                 priceRange={debouncePriceRange}
                 onPriceRangeChange={setDebouncePriceRange}
                 onPriceCommit={(range) => {
-                    updateParams({min: range[0], max: range[1]});
+                    updateParams({ min: range[0], max: range[1] });
                 }}
                 minPrice={minPriceDefault}
                 maxPrice={maxPriceDefault}
             />
 
             <ProductSection
-                className="col-span-3 h-full"
+                className="lg:col-span-3 lg:h-full"
                 products={filteredProducts}
                 showFeaturedProduct={showFeaturedProduct}
             />

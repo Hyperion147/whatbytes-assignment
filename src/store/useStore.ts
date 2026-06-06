@@ -1,6 +1,6 @@
 import { allProducts, type Product } from "@/lib/products";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 export type CartItem = Product & {
     quantity: number;
@@ -9,7 +9,7 @@ export type CartItem = Product & {
 type StoreState = {
     products: Product[];
     cartItems: CartItem[];
-    addToCart: (products: Product) => void;
+    addToCart: (product: Product, quantity?: number) => void;
     removeFromCart: (productId: number) => void;
     incrementQuantity: (productId: number) => void;
     decrementQuantity: (productId: number) => void;
@@ -22,7 +22,7 @@ export const useStore = create<StoreState>()(
             products: allProducts,
             cartItems: [],
 
-            addToCart: (product) =>
+            addToCart: (product, quantity = 1) =>
                 set((state) => {
                     const existing = state.cartItems.find(
                         (item) => item.id === product.id,
@@ -32,7 +32,7 @@ export const useStore = create<StoreState>()(
                         return {
                             cartItems: state.cartItems.map((item) =>
                                 item.id === product.id
-                                    ? { ...item, quantity: item.quantity + 1 }
+                                    ? { ...item, quantity: item.quantity + quantity }
                                     : item,
                             ),
                         };
@@ -41,7 +41,7 @@ export const useStore = create<StoreState>()(
                     return {
                         cartItems: [
                             ...state.cartItems,
-                            { ...product, quantity: 1 },
+                            { ...product, quantity },
                         ],
                     };
                 }),
@@ -73,6 +73,7 @@ export const useStore = create<StoreState>()(
         }),
         {
             name: "whatBytes-cart",
+            storage: createJSONStorage(() => localStorage),
             partialize: (state) => ({
                 cartItems: state.cartItems,
             }),
